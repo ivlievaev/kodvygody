@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>КодВыгоды — Промокоды и Скидки</title>
+    <meta name="description" content="Свежие промокоды и скидки для популярных магазинов. Экономьте на покупках с kodvygody.ru">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0f0f13; --surface: #1a1a24; --surface-hover: #22222e;
+            --card: #1e1e2a; --border: #2a2a3a;
+            --primary: #7c5cfc; --primary-light: #9b82fc;
+            --accent: #00d4aa; --text: #e8e8f0; --text-muted: #8888a0;
+            --danger: #ff5c72; --gradient: linear-gradient(135deg, #7c5cfc, #00d4aa);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,15,19,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        header.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; color: var(--text); }
+        .logo-icon { width: 36px; height: 36px; background: var(--gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav { display: flex; align-items: center; gap: 8px; }
+        nav a { color: var(--text-muted); text-decoration: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        nav a:hover, nav a.active { color: var(--text); background: var(--surface); }
+        .btn-submit {
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    display: none; /* ← СКРЫВАЕМ КНОПКУ */
+}
+
+.btn-submit.admin-visible {
+    display: inline-block; /* ← ПОКАЗЫВАЕМ ТОЛЬКО ДЛЯ АДМИНА */
+}
+
+        .hero { padding: 140px 24px 80px; text-align: center; }
+        .hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; margin-bottom: 16px; }
+        .hero h1 .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-muted); font-size: 18px; max-width: 520px; margin: 0 auto 40px; }
+        .search-box { max-width: 560px; margin: 0 auto; position: relative; }
+        .search-box input { width: 100%; padding: 16px 24px 16px 52px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; color: var(--text); font-size: 16px; font-family: inherit; outline: none; }
+        .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .stats { display: flex; justify-content: center; gap: 48px; margin-top: 48px; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .section { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .categories { display: flex; gap: 8px; padding: 20px 0 40px; overflow-x: auto; flex-wrap: wrap; justify-content: center; }
+        .cat-btn { padding: 8px 20px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; }
+        .cat-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .promo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .promo-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; }
+        .promo-card:hover { border-color: #3a3a4a; transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
+        .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .store-info { display: flex; align-items: center; gap: 12px; }
+        .store-logo { width: 44px; height: 44px; border-radius: 12px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 700; border: 1px solid var(--border); }
+        .store-name { font-weight: 600; font-size: 15px; }
+        .store-category { font-size: 12px; color: var(--text-muted); }
+        .discount-badge { padding: 4px 12px; border-radius: 100px; font-size: 13px; font-weight: 700; }
+        .badge-percent { background: rgba(0, 212, 170, 0.12); color: var(--accent); }
+        .badge-hot { background: rgba(255, 92, 114, 0.12); color: var(--danger); }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+        .card-meta { display: flex; gap: 16px; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); }
+        .promo-code-box { display: flex; align-items: center; gap: 0; background: var(--surface); border: 1px dashed var(--border); border-radius: 10px; overflow: hidden; }
+        .promo-code { flex: 1; padding: 12px 16px; font-family: 'Courier New', monospace; font-size: 15px; font-weight: 700; letter-spacing: 2px; color: var(--accent); user-select: all; }
+        .copy-btn { padding: 12px 20px; background: var(--gradient); border: none; color: #fff; font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; }
+        
+        /* CPA Link Styles */
+        .cpa-link { display: block; margin-top: 12px; text-align: center; color: var(--text-muted); font-size: 13px; text-decoration: none; padding: 10px; border-radius: 8px; border: 1px dashed var(--border); transition: all 0.2s; background: rgba(124, 92, 252, 0.03); }
+        .cpa-link:hover { color: var(--primary); border-style: solid; background: rgba(124, 92, 252, 0.08); text-decoration: none; }
+        .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent); color: #0f0f13; padding: 12px 24px; border-radius: 12px; font-weight: 600; z-index: 300; transition: transform 0.4s; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--primary-light); text-decoration: none; }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); display: none; }
+        .fade-in { animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .promo-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 28px; } }
+    </style>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "КодВыгоды",
+    "url": "https://kodvygody.ru/",
+    "logo": {
+        "@type": "ImageObject",
+        "url": "https://kodvygody.ru/logo.png"
+    },
+    "description": "Агрегатор рабочих промокодов и скидок для популярных магазинов России",
+    "foundingDate": "2026",
+    "sameAs": [
+        "https://vk.com/kodvygody",
+        "https://t.me/kodvygody"
+    ]
+}
+</script>
+</head>
+<body>
+    <header id="header">
+        <div class="header-inner">
+            <a href="https://kodvygody.ru" class="logo">
+                <div class="logo-icon">🏷</div>
+                <span>КодВыгоды</span>
+            </a>
+            <nav>
+    <a href="#" class="active">Все</a>
+    <a href="#">Магазины</a>
+    <a href="#">Категории</a>
+    <a href="#">ТОП</a>
+</nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Найди лучшие<br><span class="gradient-text">промокоды и скидки</span></h1>
+        <p>Экономь на покупках с проверенными промокодами от популярных магазинов. Обновляется каждый день.</p>
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Поиск магазина, промокода или скидки..." oninput="filterPromos()">
+        </div>
+        <div class="stats">
+            <div class="stat"><div class="stat-value">1,247</div><div class="stat-label">Промокодов</div></div>
+            <div class="stat"><div class="stat-value">386</div><div class="stat-label">Магазинов</div></div>
+            <div class="stat"><div class="stat-value">94%</div><div class="stat-label">Рабочих кодов</div></div>
+        </div>
+    </section>
+
+    <div class="section">
+        <div class="categories" id="categories">
+            <button class="cat-btn active" onclick="setCategory(this, 'all')"> Все</button>
+            <button class="cat-btn" onclick="setCategory(this, 'fashion')">👕 Одежда</button>
+            <button class="cat-btn" onclick="setCategory(this, 'tech')">💻 Техника</button>
+            <button class="cat-btn" onclick="setCategory(this, 'food')">🍔 Еда</button>
+            <button class="cat-btn" onclick="setCategory(this, 'beauty')">💄 Красота</button>
+            <button class="cat-btn" onclick="setCategory(this, 'sport')">⚽ Спорт</button>
+            <button class="cat-btn" onclick="setCategory(this, 'travel')">✈️ Путешествия</button>
+            <button class="cat-btn" onclick="setCategory(this, 'games')">🎮 Игры</button>
+            <button class="cat-btn" onclick="setCategory(this, 'health')">➕ Здоровье</button>
+            <button class="cat-btn" onclick="setCategory(this, 'online')">📺 Онлайн сервисы</button>
+            <button class="cat-btn" onclick="setCategory(this, 'pets')">📺 Товары для животных</button>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:8px;">
+            <h2 style="font-size:24px;font-weight:700;">Актуальные предложения</h2>
+            <span style="color:var(--text-muted);font-size:14px;" id="resultsCount">12 предложений</span>
+        </div>
+        <div class="promo-grid" id="promoGrid"></div>
+        <div class="empty-state" id="emptyState">
+            <div style="font-size:48px;margin-bottom:16px;">🔍</div>
+            <h3>Ничего не найдено</h3>
+            <p>Попробуйте изменить запрос или категорию</p>
+        </div>
+    </div>
+    <div class="toast" id="toast">✅ Промокод скопирован!</div>
+
+    <footer>
+        <p>© 2026 <a href="https://kodvygody.ru">КодВыгоды</a> — Промокоды и скидки на сегодня</p>
+        <p style="margin-top:12px;">
+            <a href="/wildberries">Wildberries</a> | 
+            <a href="/ozon">Ozon</a> | 
+            <a href="/yandex-edu">Яндекс Еда</a> | 
+            <a href="/sunlight">Sunlight</a>
+            <a href="/start">Start</a>
+            <a href="/yandex-music">Яндекс Музыка</a>
+            <a href="/dodo">Додо пицца</a>
+            <a href="/kuper">Купер</a>
+            <a href="/winline">Winline</a>
+            <a href="/olimbet">Olimbet</a>
+            <a href="/premier">Premier</a>
+            <a href="/petshop">Petshop</a>
+        </p>
+ <p>© 2026 <a href="https://kodvygody.ru">КодВыгоды</a> — Промокоды и скидки на сегодня</p>
+    <p style="margin-top:12px;">
+        <a href="/wildberries">Wildberries</a> | 
+        <a href="/ozon">Ozon</a> | 
+        <a href="/yandex-edu">Яндекс Еда</a> | 
+        <a href="/sunlight">Sunlight</a>
+    </p>
+    <p style="margin-top:16px;font-size:12px;color:#666;opacity:0.7;">
+        ⚠️ На сайте используются партнерские ссылки. Информация носит справочный характер.
+    </p>
+        <p style="margin-top:16px;font-size:12px;color:#666;opacity:0.7;">
+            ⚠️ На сайте используются партнерские ссылки. Информация носит справочный характер.
+        </p>
+    </footer>
+
+    <script>
+        const promos = [
+{
+                store: "Ёбидоеби",
+                logo: "ЁБ",
+                category: "food",
+                code: "BL6791PF",
+                discount: "20%",
+                type: "percent",
+                title: "Скидка 20%",
+                desc: "Скидка 20% от 1800 ₽ на первый заказ",
+                expiry: "30.06.2026",
+                uses: 1312,
+                hot: true,
+link: "https://yobidoyobi1.prfl.me/sites/qmrthq?erid=2RanykKxyY6"
+            },
+{
+                store: "RUTUBE",
+                logo: "RU",
+                category: "online",
+                code: "wvbah6nf",
+                discount: "100%",
+                type: "percent",
+                title: "Скидка на онлайн видеопортал 99%",
+                desc: "35 дней доступа к сервису RUTUBE за 1 ₽ для всех пользователей без активной подписки более полугода, далее 99 ₽",
+                expiry: "30.06.2026",
+                uses: 1021,
+                hot: true,
+link: "https://rutube.prfl.me/sites/l9tfb8?erid=2RanyoNXQj5"
+            },
+{
+                store: "Авито Путешествия",
+                logo: "АП",
+                category: "online",
+                code: "перейти по ссылке",
+                discount: "100%",
+                type: "percent",
+                title: "Скидка 1000 р",
+                desc: "Скидка 1000 ₽ от 10000 ₽ на одно первое или повторное оплаченное бронирование жилья ",
+                expiry: "30.06.2026",
+                uses: 812,
+                hot: true,
+link: "https://avito.prfl.me/sites/6sv50g?erid=2RanynTAC4b"
+            },
+{
+                store: "Додо пицца",
+                logo: "ДО",
+category: "food",
+                code: "AVTN1",
+                discount: "25%",
+                type: "percent",
+                title: "Скидка 25% додо пицца",
+                desc: "Скидка 25% при каждом заказе от 1399 ₽ на самовывоз (Красная Поляна, Эсто-Садок, Сочи (ул. Москвина, 2А))",
+                expiry: "30.06.2026",
+                uses: 1215,
+                hot: true,
+link: "https://dodo1.prfl.me/sites/s7ke1p?erid=2RanykaoXKQ"
+            },
+{
+                store: "Додо пицца",
+                logo: "ДО",
+category: "food",
+                code: "XVZ5V",
+                discount: "25%",
+                type: "percent",
+                title: "Скидка 25% додо пицца",
+                desc: "Скидка 25% на первый заказ (Воронеж, Ростов-на-Дону, Таганрог, Сочи, Адлер, Лазаревское, Красная Поляна, Эсто-Садок)",
+                expiry: "30.06.2026",
+                uses: 1150,
+                hot: true,
+link: "https://dodo1.prfl.me/sites/s7ke1p?erid=2RanykaoXKQ"
+            },
+{
+                store: "Додо пицца",
+                logo: "ДО",
+category: "food",
+                code: "VYJ6B7",
+                discount: "20%",
+                type: "percent",
+                title: "Скидка 20% додо пицца",
+                desc: "Скидка 20% при каждом заказе от 1399 ₽ (Воронеж, Ростов-на-Дону), от 1299 ₽ (Таганрог), и от 1499 ₽ (Сочи, Адлер, Лазаревское, Красная Поляна, Эсто-Садок)",
+                expiry: "30.06.2026",
+                uses: 1065,
+                hot: true,
+link: "https://dodo1.prfl.me/sites/s7ke1p?erid=2RanykaoXKQ"
+            },
+{
+                store: "Додо пицца",
+                logo: "ДО",
+category: "food",
+                code: "ZTAZRI",
+                discount: "20%",
+                type: "percent",
+                title: "Пицца в подарок в додо пицце",
+                desc: "Пицца «Двойной цыплёнок» 25 см в подарок при каждом заказе от 1399 ₽ (Воронеж, Ростов-на-Дону), от 1299 ₽ (Таганрог) и от 1499 ₽ (Сочи, Адлер, Лазаревское, Красная Поляна, Эсто-Садок)",
+                expiry: "30.06.2026",
+                uses: 1208,
+                hot: true,
+link: "https://dodo1.prfl.me/sites/s7ke1p?erid=2RanykaoXKQ"
+            },
+{
+                store: "Сберздоровье (Анализы)",
+                logo: "СБ",
+                category: "health",
+                code: "SH7B1C627",
+                discount: "20%",
+                type: "percent",
+                title: "Скидка 20%",
+                desc: "Скидка 20% на анализы от 1000 ₽ на первый и повторные заказы",
+                expiry: "30.06.2026",
+                uses: 1317,
+                hot: true,
+link: "https://sberanalizy.prfl.me/sites/ryvgjp?erid=2RanykgaaVH"
+            },
+{
+                store: "Petshop",
+                logo: "PS",
+                category: "pets",
+                code: "NEW15S320",
+                discount: "15%",
+                type: "percent",
+                title: "Скидка 15% на petshop",
+                desc: "Скидка 15% на первый заказ для выделенных брендов от 1 500 ₽ на сайте и в приложении",
+                expiry: "30.06.2026",
+                uses: 957,
+                hot: true,
+link: "https://appmetrica.prfl.me/sites/0ffem3?erid=2RanynHvSRh"
+            },
+{
+                store: "Petshop",
+                logo: "PS",
+                category: "pets",
+                code: "NEW15PS116",
+                discount: "15%",
+                type: "percent",
+                title: "Скидка 15% на petshop",
+                desc: "Скидка 15% на первый заказ от 1 500 ₽ на сайте и в приложении",
+                expiry: "30.06.2026",
+                uses: 815,
+                hot: true,
+link: "https://appmetrica.prfl.me/sites/0ffem3?erid=2RanynHvSRh"
+            },
+{
+                store: "Elementaree",
+                logo: "EL",
+category: "food",
+                code: "ani61",
+                discount: "40%",
+                type: "percent",
+                title: "Скидка 40%",
+                desc: "Скидка 40% на первый заказ от 3000 ₽ или 12% на все повторные заказы от 3000 ₽",
+                expiry: "30.06.2026",
+                uses: 912,
+                hot: true,
+link: "https://elementareenw.prfl.me/sites/z56lb1?erid=2Ranyms4Uaf"
+            },
+{
+                store: "Купер",
+                logo: "КУ",
+category: "food",
+                code: "glop0t27gz",
+                discount: "0",
+                type: "percent",
+                title: "Скидка 1000 в купер",
+                desc: "Скидка 1000 ₽ на первый заказ в магазине 'Глобус' в Купере от 2500 ₽",
+                expiry: "30.06.2026",
+                uses: 532,
+                hot: true,
+link: "https://kuper1.prfl.me/sites/qtx0ap?erid=2RanynAEiJo"
+            },
+{
+                store: "Купер",
+                logo: "КУ",
+category: "food",
+                code: "okyp14ymkd",
+                discount: "0",
+                type: "percent",
+                title: "Скидка 1000 в купер",
+                desc: "Скидка 1000 ₽ на первый заказ в магазине 'О'КЕЙ' в Купере от 2500 ₽",
+                expiry: "30.06.2026",
+                uses: 912,
+                hot: true,
+link: "https://kuper1.prfl.me/sites/qtx0ap?erid=2RanynAEiJo"
+            },
+{
+                store: "Купер",
+                logo: "КУ",
+category: "food",
+                code: "lnr2e1a3y",
+                discount: "40%",
+                type: "percent",
+                title: "Скидка на первый заказ Купер",
+                desc: "Скидка 40% на первый заказ от 1000 ₽, максимум 500",
+                expiry: "30.06.2026",
+                uses: 1031,
+                hot: true,
+link: "https://kuper1.prfl.me/sites/qtx0ap?erid=2RanynAEiJo"
+            },
+{
+                store: "Купер",
+                logo: "КУ",
+category: "food",
+                code: "rep1xhm7q",
+                discount: "40%",
+                type: "percent",
+                title: "Скидка на заказ Купер",
+                desc: "Скидка 33% от 900 ₽ для тех, кто не делал заказ год и более, максимальный размер скидки — 500 ₽",
+                expiry: "30.06.2026",
+                uses: 864,
+                hot: true,
+link: "https://kuper1.prfl.me/sites/qtx0ap?erid=2RanynAEiJo"
+            },
+{
+                store: "PREMIER",
+                logo: "PR",
+                category: "online",
+                code: "2ekwbpg7",
+                discount: "100%",
+                type: "percent",
+                title: "Скидка на онлайн кинотеатр премьер",
+                desc: "50 дней доступа к сервисам RUTUBE + PREMIER за 1 ₽ для пользователей без активной подписки более полугода или подписка на один месяц за 99 ₽ для неактивных пользователей менее полугода, далее 399 ₽",
+                expiry: "30.06.2026",
+                uses: 1142,
+                hot: true,
+link: "https://premier.prfl.me/sites/thxa2m?erid=2RanykhzXzT"
+            },
+{
+                store: "FARFOR",
+                logo: "FA",
+category: "food",
+                code: "ZNK42896",
+                discount: "15%",
+                type: "percent",
+                title: "Промокод в Farfor",
+                desc: "Скидка 15% при заказе от 1500 ₽ (только для новых клиентов)",
+                expiry: "30.06.2026",
+                uses: 1315,
+                hot: true,
+link: "https://farfor1.prfl.me/sites/z2pf6c?erid=2Ranym7wbia"
+            },
+{
+                store: "FARFOR",
+                logo: "FA",
+category: "food",
+                code: "TYZ18461",
+                discount: "15%",
+                type: "percent",
+                title: "Промокод в Farfor",
+                desc: "Ролл Темпурный Цезарь в подарок при одном любом заказе от 1490 ₽",
+                expiry: "30.06.2026",
+                uses: 289,
+                hot: true,
+link: "https://farfor1.prfl.me/sites/z2pf6c?erid=2Ranym7wbia"
+            },
+{
+                store: "Start.ru",
+                logo: "ST",
+category: "services",
+                code: "pf5m0k624gp",
+                discount: "0%",
+                type: "percent",
+                title: "Промокод на старт.ру",
+                desc: "30 дней доступа на START за 0 ₽ для новых пользователей",
+                expiry: "30.06.2026",
+                uses: 792,
+                hot: true,
+link: "https://start.prfl.me/sites/8iqzdt?erid=2RanyoC9z8z"
+            },
+{
+                store: "Winline",
+                logo: "WI",
+category: "sport",
+                code: "0",
+                discount: "0%",
+                type: "percent",
+                title: "Зарегистрируйся по ссылке и получить 10000 фрибетов",
+                desc: "Перейди по ссылке и получи бонус",
+                expiry: "30.06.2026",
+                uses: 473,
+                hot: true,
+link: "https://wlnn1.prfl.me/sites/vyuu73"
+            },
+{
+                store: "Sunlight",
+                logo: "SU",
+category: "beauty",
+                code: "pfj134302",
+                discount: "0%",
+                type: "percent",
+                title: "Скидка в Sunlight",
+                desc: "Cкидка 1000 ₽ от 3000 ₽ на весь ассортимент для новых пользователей",
+                expiry: "30.06.2026",
+                uses: 582,
+                hot: true,
+link: "https://sunlight.prfl.me/sites/ezbkrq?erid=2RanykgqBdc"
+            },
+{
+                store: "Sunlight",
+                logo: "SU",
+category: "beauty",
+                code: "pfnj352833",
+                discount: "0%",
+                type: "percent",
+                title: "Скидка в Sunlight",
+                desc: "Cкидка 3000 ₽ от 15000 ₽ на весь ассортимент для новых пользователей",
+                expiry: "30.06.2026",
+                uses: 515,
+                hot: true,
+link: "https://sunlight.prfl.me/sites/ezbkrq?erid=2RanykgqBdc"
+            },
+{
+                store: "Sunlight",
+                logo: "SU",
+category: "beauty",
+                code: "pfj1160323",
+                discount: "0%",
+                type: "percent",
+                title: "Скидка в Sunlight",
+                desc: "Cкидка 10000 ₽ от 100000 ₽ на весь ассортимент для всех пользователей",
+                expiry: "30.06.2026",
+                uses: 389,
+                hot: true,
+link: "https://sunlight.prfl.me/sites/ezbkrq?erid=2RanykgqBdc"
+            },
+{
+                store: "ТАНУКИ",
+                logo: "ТА",
+category: "food",
+                code: "20NV1421",
+                discount: "20%",
+                type: "percent",
+                title: "Промокод в тануки",
+                desc: "Скидка 20% от 1090 ₽ на первый заказ в Тануки",
+                expiry: "30.06.2026",
+                uses: 116,
+                hot: true,
+link: "https://tanuki.prfl.me/sites/8bob6g?erid=2Ranyn7mTBx"
+            },
+{
+                store: "ТАНУКИ",
+                logo: "ТА",
+category: "food",
+                code: "15NV1421",
+                discount: "15%",
+                type: "percent",
+                title: "Промокод в тануки",
+                desc: "Скидка 15% от 1490 ₽ на все повторные заказы в Тануки",
+                expiry: "30.06.2026",
+                uses: 514,
+                hot: true,
+link: "https://tanuki.prfl.me/sites/8bob6g?erid=2Ranyn7mTBx"
+            },
+{
+                store: "ТАНУКИ",
+                logo: "ТА",
+category: "food",
+                code: "NV1419",
+                discount: "0%",
+                type: "percent",
+                title: "Промокод в тануки",
+                desc: "Ролл ​Окинава в подарок при каждом заказе от 1490 ₽",
+                expiry: "30.06.2026",
+                uses: 348,
+                hot: true,
+link: "https://tanuki.prfl.me/sites/8bob6g?erid=2Ranyn7mTBx"
+            },
+ {
+                store: "WINK",
+                logo: "WINK",
+                code: "5CCTZP1EMS",
+                type: "percent",
+                desc: "Для новых пользователей",
+                expiry: "31.06.2026",
+                uses: 1842,
+                hot: true,
+link: "https://ya.cc/9THoB7"
+            },
+{
+                store: "OLIMBET",
+                logo: "OL",
+                category: "sport",
+                code: "OLIMP3ZMSK",
+                type: "percent",
+                title: "ОЛИМБЕТ промокод",
+                desc: "Фрибет до 15 000 новым пользователям при внесении депозита от 1 000 ₽",
+                expiry: "30.06.2026",
+                uses: 1950,
+                hot: true,
+link: "https://olimpbk.prfl.me/sites/f5g987"
+            },
+            
+            {
+                store: "TOKISAN на Wildberries",
+                logo: "WB",
+                code: "TM54LZE6",
+                type: "deal",
+                title: "Скидка на Wildberries",
+                desc: "Дышащие подгузники‑трусики TOKISAN",
+                expiry: "30.06.2026",
+                uses: 2341,
+                hot: true
+            },
+            {
+                store: "ИВИ",
+                logo: "ИВИ",
+                code: "FILM35",
+                discount: "100%",
+                type: "percent",
+                title: "Бесплатный доступ на 30 дней!",
+                desc: "Все фильмы",
+                expiry: "31.12.2026",
+                uses: 756,
+                hot: false,
+link: "https://olimpbk.prfl.me/sites/f5g987"
+            },
+            {
+                store: "SYNERGETIC на OZON",
+                logo: "OZ",
+                code: "B2C0DB5DEAAA",
+                discount: "7%",
+                type: "deal",
+                title: "7% на все!",
+                desc: "Бытовая химия",
+                expiry: "01.07.2026",
+                uses: 432,
+                hot: false
+            },
+            {
+                store: "POLZARU",
+                logo: "PO",
+                category: "health",
+                code: "PRFGE592",
+                discount: "10%",
+                type: "percent",
+                title: "Скидка 10% на первый заказ от 2000₽",
+                desc: "На весь ассортимент",
+                expiry: "20.06.2026",
+                uses: 1203,
+                hot: true,
+link: "https://polza.prfl.me/vk/80zin1?erid=2RanynkMaXc"
+            },
+            {
+                store: "POLZARU",
+                logo: "PO",
+                category: "health",
+                code: "PRFRCMEW",
+                discount: "3%",
+                type: "percent",
+                title: "Скидка 3% при повторном заказе от 1900₽",
+                desc: "На весь ассортимент",
+                expiry: "20.06.2026",
+                uses: 1203,
+                hot: true,
+link: "https://polza.prfl.me/vk/80zin1?erid=2RanynkMaXc"
+            },
+            {
+                store: "Geltek",
+                logo: "GL",
+                category: "beauty",
+                code: "PERF-8Q9",
+                discount: "25%",
+                type: "percent",
+                title: "25% на весь ассортимент на первый и все повторные заказы",
+                desc: "Скидка 750 ₽ на первую покупку билетов от 5 000 ₽",
+                expiry: "15.07.2026",
+                uses: 3210,
+                hot: true,
+link: "https://geltek.prfl.me/vk/70cun3?erid=2RanymecTxW"
+            },
+{
+                store: "Яндекс Афиша",
+                logo: "ЯА",
+                category: "online",
+                code: "F89177",
+                discount: "750 р",
+                type: "percent",
+                title: "Скидка Яндекс Афиша",
+                desc: "Скидка 750 ₽ на первую покупку билетов от 5 000 ₽",
+                expiry: "31.07.2026",
+                uses: 1248,
+                hot: true,
+link: "https://yandafisha.prfl.me/sites/ctspur?erid=2RanynfwVH5"
+            },
+{
+                store: "Яндекс Афиша",
+                logo: "ЯА",
+                category: "online",
+                code: "P94761",
+                discount: "300 р",
+                type: "percent",
+                title: "Скидка Яндекс Афиша",
+                desc: "Скидка 300 ₽ на первую покупку билетов от 2000 ₽",
+                expiry: "31.07.2026",
+                uses: 918,
+                hot: true,
+link: "https://yandafisha.prfl.me/sites/ctspur?erid=2RanynfwVH5"
+            },
+{
+                store: "Яндекс Афиша",
+                logo: "ЯА",
+                category: "online",
+                code: "F93435",
+                discount: "400 р",
+                type: "percent",
+                title: "Скидка Яндекс Афиша",
+                desc: "Скидка 400 ₽ на первую покупку билетов от 3000 ₽",
+                expiry: "31.07.2026",
+                uses: 1015,
+                hot: true,
+link: "https://yandafisha.prfl.me/sites/ctspur?erid=2RanynfwVH5"
+            },
+{
+                store: "Яндекс Афиша",
+                logo: "ЯА",
+                category: "online",
+                code: "DT901206",
+                discount: "10%",
+                type: "percent",
+                title: "Скидка Яндекс Афиша",
+                desc: "Скидка 10% на первую и все повторные покупки билетов от 3 000 ₽",
+                expiry: "31.07.2026",
+                uses: 1154,
+                hot: true,
+link: "https://yandafisha.prfl.me/sites/ctspur?erid=2RanynfwVH5"
+            },
+{
+                store: "Яндекс Афиша",
+                logo: "ЯА",
+                category: "online",
+                code: "BM311386",
+                discount: "100%",
+                type: "percent",
+                title: "Скидка Яндекс Афиша",
+                desc: "Скидка 100% на сервисный сбор на первую и все повторные покупки билетов от 3 000 ₽",
+                expiry: "31.07.2026",
+                uses: 1025,
+                hot: true,
+link: "https://yandafisha.prfl.me/sites/ctspur?erid=2RanynfwVH5"
+            },
+        ];
+        
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        function renderPromos() {
+            const grid = document.getElementById('promoGrid');
+            const empty = document.getElementById('emptyState');
+            const count = document.getElementById('resultsCount');
+            
+            let filtered = promos.filter(p => {
+                const matchCat = currentCategory === 'all' || p.category === currentCategory;
+                const matchSearch = !searchQuery || 
+                    p.store.toLowerCase().includes(searchQuery) || 
+                    p.title.toLowerCase().includes(searchQuery) || 
+                    p.code.toLowerCase().includes(searchQuery);
+                return matchCat && matchSearch;
+            });
+
+            count.textContent = `${filtered.length} предложений`;
+            if (filtered.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+            empty.style.display = 'none';
+
+            grid.innerHTML = filtered.map((p, i) => `
+                <div class="promo-card fade-in" style="animation-delay: ${i * 0.05}s">
+                    <div class="card-top">
+                        <div class="store-info">
+                            <div class="store-logo">${p.logo}</div>
+                            <div><div class="store-name">${p.store}</div><div class="store-category">${getCategoryName(p.category)}</div></div>
+                        </div>
+                        <span class="discount-badge ${p.hot ? 'badge-hot' : 'badge-percent'}">${p.hot ? ' HOT' : p.discount}</span>
+                    </div>
+                    <div class="card-title">${p.title}</div>
+                    <div class="card-desc">${p.desc}</div>
+                    <div class="card-meta"><span>👥 ${p.uses.toLocaleString()} использований</span><span> до ${p.expiry}</span></div>
+                    <div class="promo-code-box">
+                        <div class="promo-code">${p.code}</div>
+                        <button class="copy-btn" onclick="copyCode('${p.code}', this)">Скопировать</button>
+                    </div>
+                    ${p.link ? `<a href="${p.link}" rel="sponsored noopener noreferrer" target="_blank" class="cpa-link">Перейти в ${p.store} ️ (реклама)</a>` : ''}
+                </div>`).join('');
+        }
+
+        function getCategoryName(cat) {
+            const names = { fashion: '👕 Одежда', tech: '💻 Техника', food: ' Еда', beauty: '💄 Красота', sport: '⚽ Спорт', travel: '️ Путешествия', games: ' Игры', health: '➕ Здоровье', online: '📺 Онлайн сервисы' };
+            return names[cat] || cat;
+        }
+
+        function copyCode(code, btn) {
+            navigator.clipboard.writeText(code).then(() => {
+                btn.textContent = '✓ Скопировано';
+                showToast('✅ Промокод ' + code + ' скопирован!');
+                setTimeout(() => btn.textContent = 'Скопировать', 2000);
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function setCategory(btn, cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = cat;
+            renderPromos();
+        }
+
+        function filterPromos() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderPromos();
+        }
+        window.addEventListener('scroll', () => {
+            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        renderPromos();
+// === АДМИН-АВТОРИЗАЦИЯ ===
+const ADMIN_PASSWORD = 'Makaroshka.23';
+
+// Проверяем, авторизован ли админ (сохраняем в localStorage)
+function checkAdmin() {
+    const isAdmin = localStorage.getItem('kodvygody_admin') === 'true';
+    const btn = document.querySelector('.btn-submit');
+    if (isAdmin && btn) {
+        btn.classList.add('admin-visible');
+    }
+}
+
+// Вход через пароль
+function adminLogin() {
+    const password = prompt('🔒 Введите пароль администратора:');
+    if (password === ADMIN_PASSWORD) {
+        localStorage.setItem('kodvygody_admin', 'true');
+        alert('✅ Доступ разрешён! Кнопка "+ Добавить" теперь видна.');
+        checkAdmin();
+    } else if (password !== null) {
+        alert('❌ Неверный пароль!');
+    }
+}
+
+// Выход из админки
+function adminLogout() {
+    localStorage.removeItem('kodvygody_admin');
+    alert('👋 Вы вышли из режима администратора.');
+    location.reload();
+}
+
+// Секретная комбинация: нажмите Ctrl+Shift+A для входа
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        adminLogin();
+    }
+});
+
+// Проверка при загрузке страницы
+checkAdmin();
+    </script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    "name": ["Wildberries", "Ozon", "Яндекс Еда", "Додо пицца", "Sunlight", "Купер", "START", "Premier", "OLIMBET", "Petshop"],
+    "url": [
+        "https://kodvygody.ru/wildberries",
+        "https://kodvygody.ru/ozon",
+        "https://kodvygody.ru/yandex-edu",
+        "https://kodvygody.ru/dodo",
+        "https://kodvygody.ru/sunlight",
+        "https://kodvygody.ru/kuper",
+        "https://kodvygody.ru/start",
+        "https://kodvygody.ru/premier",
+        "https://kodvygody.ru/olimbet",
+        "https://kodvygody.ru/petshop"
+    ]
+}
+</script>
+</body>
+</html>

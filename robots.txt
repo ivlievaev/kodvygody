@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Sitemap: https://kodvygody.ru/sitemap.xml
+
+Host: https://kodvygody.ru
