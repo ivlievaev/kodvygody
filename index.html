@@ -39,7 +39,6 @@
     font-family: inherit;
     display: none; /* ← СКРЫВАЕМ КНОПКУ */
 }
-}
 
         .hero { padding: 140px 24px 80px; text-align: center; }
         .hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; margin-bottom: 16px; }
@@ -589,7 +588,7 @@ link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315"
         }
 
         function getCategoryName(cat) {
-            const names = { fashion: '👕 Одежда', tech: '💻 Техника', food: '🍔 Еда', beauty: '💄 Красота', sport: '⚽ Спорт', travel: '️✈ Путешествия', games: '🎮 Игры', health: '➕ Здоровье', online: '📺 Онлайн сервисы' };
+            const names = { fashion: '👕 Одежда', tech: '💻 Техника', food: '🍔 Еда', beauty: '💄 Красота', sport: '⚽ Спорт', travel: '️✈ Путешествия', games: '🎮 Игры', health: '➕ Здоровье', online: '📺 Онлайн сервисы', pets: '📺 Товары для животных' };
             return names[cat] || cat;
         }
 
@@ -622,11 +621,6 @@ link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315"
         window.addEventListener('scroll', () => {
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
         });
-}
-// Проверка при загрузке страницы
-checkAdmin();
-    </script>
-<script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
