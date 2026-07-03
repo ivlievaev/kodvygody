@@ -39,9 +39,6 @@
     font-family: inherit;
     display: none; /* ← СКРЫВАЕМ КНОПКУ */
 }
-
-.btn-submit.admin-visible {
-    display: inline-block; /* ← ПОКАЗЫВАЕМ ТОЛЬКО ДЛЯ АДМИНА */
 }
 
         .hero { padding: 140px 24px 80px; text-align: center; }
@@ -305,7 +302,7 @@ category: "food",
                 type: "percent",
                 title: "Пицца в подарок в додо пицце",
                 desc: "Пицца «Двойной цыплёнок» 25 см в подарок при каждом заказе от 1399 ₽ (Воронеж, Ростов-на-Дону), от 1299 ₽ (Таганрог) и от 1499 ₽ (Сочи, Адлер, Лазаревское, Красная Поляна, Эсто-Садок)",
-                expiry: " 31.07.2026",
+                expiry: "31.07.2026",
                 uses: 1208,
                 hot: true,
 link: "https://dodo1.prfl.me/sites/ndb8dx?erid=2RanymKjfuu"
@@ -592,7 +589,7 @@ link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315"
         }
 
         function getCategoryName(cat) {
-            const names = { fashion: '👕 Одежда', tech: '💻 Техника', food: ' Еда', beauty: '💄 Красота', sport: '⚽ Спорт', travel: '️ Путешествия', games: ' Игры', health: '➕ Здоровье', online: '📺 Онлайн сервисы' };
+            const names = { fashion: '👕 Одежда', tech: '💻 Техника', food: '🍔 Еда', beauty: '💄 Красота', sport: '⚽ Спорт', travel: '️✈ Путешествия', games: '🎮 Игры', health: '➕ Здоровье', online: '📺 Онлайн сервисы' };
             return names[cat] || cat;
         }
 
@@ -625,47 +622,7 @@ link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315"
         window.addEventListener('scroll', () => {
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
         });
-
-        renderPromos();
-// === АДМИН-АВТОРИЗАЦИЯ ===
-const ADMIN_PASSWORD = 'Makaroshka.23';
-
-// Проверяем, авторизован ли админ (сохраняем в localStorage)
-function checkAdmin() {
-    const isAdmin = localStorage.getItem('kodvygody_admin') === 'true';
-    const btn = document.querySelector('.btn-submit');
-    if (isAdmin && btn) {
-        btn.classList.add('admin-visible');
-    }
 }
-
-// Вход через пароль
-function adminLogin() {
-    const password = prompt('🔒 Введите пароль администратора:');
-    if (password === ADMIN_PASSWORD) {
-        localStorage.setItem('kodvygody_admin', 'true');
-        alert('✅ Доступ разрешён! Кнопка "+ Добавить" теперь видна.');
-        checkAdmin();
-    } else if (password !== null) {
-        alert('❌ Неверный пароль!');
-    }
-}
-
-// Выход из админки
-function adminLogout() {
-    localStorage.removeItem('kodvygody_admin');
-    alert('👋 Вы вышли из режима администратора.');
-    location.reload();
-}
-
-// Секретная комбинация: нажмите Ctrl+Shift+A для входа
-document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        e.preventDefault();
-        adminLogin();
-    }
-});
-
 // Проверка при загрузке страницы
 checkAdmin();
     </script>
