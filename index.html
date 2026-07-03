@@ -55,4 +55,324 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "КодВыгоды",
-        "url": "https://kod
+        "url": "https://kodvygody.ru/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://kodvygody.ru/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": "1247",
+            "reviewCount": "342"
+        }
+    }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0f0f13; --surface: #1a1a24; --surface-hover: #22222e;
+            --card: #1e1e2a; --border: #2a2a3a;
+            --primary: #7c5cfc; --primary-light: #9b82fc;
+            --accent: #00d4aa; --text: #e8e8f0; --text-muted: #8888a0;
+            --danger: #ff5c72; --gradient: linear-gradient(135deg, #7c5cfc, #00d4aa);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,15,19,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        header.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 20px; color: var(--text); }
+        .logo-icon { width: 36px; height: 36px; background: var(--gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav { display: flex; align-items: center; gap: 8px; }
+        nav a { color: var(--text-muted); text-decoration: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+        nav a:hover, nav a.active { color: var(--text); background: var(--surface); }
+        .hero { padding: 140px 24px 80px; text-align: center; }
+        .hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; margin-bottom: 16px; }
+        .hero h1 .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-muted); font-size: 18px; max-width: 520px; margin: 0 auto 40px; }
+        .search-box { max-width: 560px; margin: 0 auto; position: relative; }
+        .search-box input { width: 100%; padding: 16px 24px 16px 52px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; color: var(--text); font-size: 16px; font-family: inherit; outline: none; transition: all 0.3s; }
+        .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.15); }
+        .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .stats { display: flex; justify-content: center; gap: 48px; margin-top: 48px; flex-wrap: wrap; }
+        .stat { text-align: center; }
+        .stat-value { font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .section { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .categories { display: flex; gap: 8px; padding: 20px 0 40px; overflow-x: auto; flex-wrap: wrap; justify-content: center; }
+        .cat-btn { padding: 8px 20px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+        .cat-btn:hover { border-color: var(--primary); color: var(--text); }
+        .cat-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 8px; }
+        .section-title { font-size: 24px; font-weight: 700; }
+        .results-count { color: var(--text-muted); font-size: 14px; }
+        .promo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .promo-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; }
+        .promo-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+        .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .store-info { display: flex; align-items: center; gap: 12px; }
+        .store-logo { width: 44px; height: 44px; border-radius: 12px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 700; border: 1px solid var(--border); color: var(--accent); }
+        .store-name { font-weight: 600; font-size: 15px; }
+        .store-category { font-size: 12px; color: var(--text-muted); }
+        .discount-badge { padding: 4px 12px; border-radius: 100px; font-size: 13px; font-weight: 700; }
+        .badge-percent { background: rgba(0, 212, 170, 0.15); color: var(--accent); }
+        .badge-hot { background: rgba(255, 92, 114, 0.15); color: var(--danger); }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+        .card-meta { display: flex; gap: 16px; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); }
+        .promo-code-box { display: flex; align-items: center; background: var(--surface); border: 1px dashed var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+        .promo-code { flex: 1; padding: 12px 16px; font-family: 'Courier New', monospace; font-size: 15px; font-weight: 700; letter-spacing: 2px; color: var(--accent); user-select: all; }
+        .copy-btn { padding: 12px 20px; background: var(--gradient); border: none; color: #fff; font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+        .copy-btn:hover { opacity: 0.9; }
+        .copy-btn.copied { background: var(--accent); color: #000; }
+        .cpa-link { display: block; text-align: center; color: var(--text-muted); font-size: 13px; text-decoration: none; padding: 10px; border-radius: 8px; border: 1px dashed var(--border); transition: all 0.2s; background: rgba(124, 92, 252, 0.03); }
+        .cpa-link:hover { color: var(--primary); border-style: solid; background: rgba(124, 92, 252, 0.08); text-decoration: none; }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); display: none; }
+        .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+        .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent); color: #0f0f13; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; z-index: 300; transition: transform 0.4s; box-shadow: 0 8px 30px rgba(0, 212, 170, 0.3); opacity: 0; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--primary-light); text-decoration: none; }
+        .fade-in { animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) { .promo-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 28px; } .stats { gap: 32px; } }
+    </style>
+</head>
+<body>
+
+<header id="header">
+    <div class="header-inner">
+        <a href="https://kodvygody.ru" class="logo">
+            <div class="logo-icon">🏷</div>
+            <span>КодВыгоды</span>
+        </a>
+        <nav>
+            <a href="#" class="active">Все</a>
+            <a href="/wildberries">Магазины</a>
+            <a href="#">Категории</a>
+            <a href="#">ТОП</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Найди лучшие<br><span class="gradient-text">промокоды и скидки</span></h1>
+    <p>Экономь на покупках с проверенными промокодами от популярных магазинов. Обновляется каждый день.</p>
+    <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Поиск магазина, промокода или скидки..." oninput="filterPromos()">
+    </div>
+    <div class="stats">
+        <div class="stat"><div class="stat-value">1,247</div><div class="stat-label">Промокодов</div></div>
+        <div class="stat"><div class="stat-value">386</div><div class="stat-label">Магазинов</div></div>
+        <div class="stat"><div class="stat-value">94%</div><div class="stat-label">Рабочих кодов</div></div>
+    </div>
+</section>
+
+<div class="section">
+    <div class="categories" id="categories">
+        <button class="cat-btn active" onclick="setCategory(this, 'all')">🔥 Все</button>
+        <button class="cat-btn" onclick="setCategory(this, 'fashion')">👕 Одежда</button>
+        <button class="cat-btn" onclick="setCategory(this, 'tech')">💻 Техника</button>
+        <button class="cat-btn" onclick="setCategory(this, 'food')">🍔 Еда</button>
+        <button class="cat-btn" onclick="setCategory(this, 'beauty')">💄 Красота</button>
+        <button class="cat-btn" onclick="setCategory(this, 'sport')">⚽ Спорт</button>
+        <button class="cat-btn" onclick="setCategory(this, 'travel')">✈️ Путешествия</button>
+        <button class="cat-btn" onclick="setCategory(this, 'games')">🎮 Игры</button>
+        <button class="cat-btn" onclick="setCategory(this, 'health')">➕ Здоровье</button>
+        <button class="cat-btn" onclick="setCategory(this, 'online')">📺 Онлайн сервисы</button>
+        <button class="cat-btn" onclick="setCategory(this, 'pets')">🐾 Товары для животных</button>
+    </div>
+    <div class="section-header">
+        <h2 class="section-title">Актуальные предложения</h2>
+        <span class="results-count" id="resultsCount">0 предложений</span>
+    </div>
+    <div class="promo-grid" id="promoGrid"></div>
+    <div class="empty-state" id="emptyState">
+        <div class="icon">🔍</div>
+        <h3>Ничего не найдено</h3>
+        <p>Попробуйте изменить запрос или категорию</p>
+    </div>
+</div>
+
+<div class="toast" id="toast">✅ Промокод скопирован!</div>
+
+<footer>
+    <p>© 2026 <a href="https://kodvygody.ru">КодВыгоды</a> — Промокоды и скидки на сегодня</p>
+    <p style="margin-top:12px;">
+        <a href="/wildberries">Wildberries</a> | 
+        <a href="/ozon">Ozon</a> | 
+        <a href="/yandex-edu">Яндекс Еда</a> | 
+        <a href="/sunlight">Sunlight</a> |
+        <a href="/start">START</a> |
+        <a href="/yandex-music">Яндекс Музыка</a> |
+        <a href="/dodo">Додо пицца</a> |
+        <a href="/kuper">Купер</a> |
+        <a href="/winline">Winline</a> |
+        <a href="/olimbet">OLIMBET</a> |
+        <a href="/premier">Premier</a> |
+        <a href="/petshop">Petshop</a>
+    </p>
+    <p style="margin-top:16px;font-size:12px;color:#666;opacity:0.7;">
+        ⚠️ На сайте используются партнерские ссылки. Информация носит справочный характер.
+    </p>
+</footer>
+
+<script>
+const promos = [
+    { store: "Ёбидоеби", logo: "ЁБ", category: "food", code: "BL6791PF", discount: "20%", type: "percent", title: "Скидка 20%", desc: "Скидка 20% от 1800 ₽ на первый заказ", expiry: "31.07.2026", uses: 1312, hot: true, link: "https://yobidoyobi1.prfl.me/sites/1eewie?erid=2RanykgeyRV" },
+    { store: "Бетховен", logo: "БТ", category: "pets", code: "CPFBLY6X2TT", discount: "20%", type: "percent", title: "Скидка 20% на первый и повторные заказы", desc: "Скидка 20% на первый и все повторные онлайн-заказы товаров собственной торговой марки от 1500 ₽", expiry: "31.07.2026", uses: 957, hot: true, link: "https://bethowenru.prfl.me/sites/kxrc01?erid=2RanykZFNVh" },
+    { store: "Бетховен", logo: "БТ", category: "pets", code: "DPFRGE2TT2I", discount: "15%", type: "percent", title: "Скидка 15% в Бетховен", desc: "Скидка 15% на первый и все повторные онлайн-заказы от 1500 ₽", expiry: "31.07.2026", uses: 1024, hot: true, link: "https://bethowenru.prfl.me/sites/kxrc01?erid=2RanykZFNVh" },
+    { store: "Телодвижения на WB", logo: "ТЕ", category: "fashion", code: "13NZJ3P6", discount: "10%", type: "percent", title: "Скидка 1000 ₽", desc: "Дополнительная скидка 10% по промокоду на все товары бренда Телодвижения на WB при каждом заказе", expiry: "31.07.2026", uses: 812, hot: true, link: "https://telodvizenia.prfl.me/sites/aaekss?erid=2RanynnEdVd" },
+    { store: "Додо пицца", logo: "ДО", category: "food", code: "AVTN1", discount: "25%", type: "percent", title: "Скидка 25% на самовывоз", desc: "Скидка 25% при каждом заказе от 1399 ₽ на самовывоз (Красная Поляна, Эсто-Садок, Сочи)", expiry: "31.07.2026", uses: 1215, hot: true, link: "https://dodo1.prfl.me/sites/ndb8dx?erid=2RanymKjfuu" },
+    { store: "Додо пицца", logo: "ДО", category: "food", code: "XVZ5V", discount: "25%", type: "percent", title: "Скидка 25% на первый заказ", desc: "Скидка 25% на первый заказ (Воронеж, Ростов-на-Дону, Таганрог, Сочи, Адлер, Лазаревское, Красная Поляна, Эсто-Садок)", expiry: "31.07.2026", uses: 1150, hot: true, link: "https://dodo1.prfl.me/sites/ndb8dx?erid=2RanymKjfuu" },
+    { store: "Додо пицца", logo: "ДО", category: "food", code: "VYJ6B7", discount: "20%", type: "percent", title: "Скидка 20% на повторные заказы", desc: "Скидка 20% при каждом заказе от 1399 ₽ (Воронеж, Ростов-на-Дону), от 1299 ₽ (Таганрог), от 1499 ₽ (Сочи, Адлер, Лазаревское, Красная Поляна, Эсто-Садок)", expiry: "31.07.2026", uses: 1065, hot: true, link: "https://dodo1.prfl.me/sites/ndb8dx?erid=2RanymKjfuu" },
+    { store: "Додо пицца", logo: "ДО", category: "food", code: "ZTAZRI", discount: "Пицца", type: "deal", title: "Пицца в подарок", desc: "Пицца «Двойной цыплёнок» 25 см в подарок при каждом заказе от 1399 ₽", expiry: "31.07.2026", uses: 1208, hot: true, link: "https://dodo1.prfl.me/sites/ndb8dx?erid=2RanymKjfuu" },
+    { store: "Elementaree", logo: "EL", category: "food", code: "ani61", discount: "40%", type: "percent", title: "Скидка 40% на первый заказ", desc: "Скидка 40% на первый заказ от 3000 ₽ или 12% на все повторные заказы от 3000 ₽", expiry: "31.07.2026", uses: 912, hot: true, link: "https://elementareenw.prfl.me/sites/xxd797?erid=2Ranyo1arWf" },
+    { store: "Купер", logo: "КУ", category: "food", code: "glop0t27gz", discount: "1000 ₽", type: "deal", title: "1000 ₽ в Глобус от 2500 ₽", desc: "Скидка 1000 ₽ на первый заказ в магазине Глобус в Купере от 2500 ₽", expiry: "31.07.2026", uses: 1032, hot: true, link: "https://kuper1.prfl.me/sites/jrrqqq?erid=2RanykCWYzf" },
+    { store: "Купер", logo: "КУ", category: "food", code: "pfdix0dyap6", discount: "35%", type: "percent", title: "Скидка 35% в Дикси", desc: "Скидка 35% на первый заказ в магазине Дикси в Купере от 1800 ₽. Максимум 700 ₽", expiry: "31.07.2026", uses: 912, hot: true, link: "https://kuper1.prfl.me/sites/qtx0ap?erid=2RanynAEiJo" },
+    { store: "Start.ru", logo: "ST", category: "online", code: "pf5m0k624gp", discount: "30 дней", type: "percent", title: "30 дней START за 0 ₽", desc: "30 дней доступа на START за 0 ₽ для новых пользователей", expiry: "31.07.2026", uses: 1010, hot: true, link: "https://start.prfl.me/sites/kf10ew?erid=2RanymT9woZ" },
+    { store: "Sunlight", logo: "SU", category: "beauty", code: "pfjl58102", discount: "1000 ₽", type: "deal", title: "Скидка 1000 ₽ от 3000 ₽", desc: "Скидка 1000 ₽ от 3000 ₽ на весь ассортимент для новых пользователей", expiry: "10.07.2026", uses: 582, hot: true, link: "https://sunlight.prfl.me/sites/n124hx?erid=2RanynAfbhD" },
+    { store: "Sunlight", logo: "SU", category: "beauty", code: "pfi1587758", discount: "1500 ₽", type: "deal", title: "Скидка 1500 ₽ от 15000 ₽", desc: "Скидка 1500 ₽ от 15000 ₽ на весь ассортимент для всех пользователей", expiry: "10.07.2026", uses: 612, hot: true, link: "https://sunlight.prfl.me/sites/n124hx?erid=2RanynAfbhD" },
+    { store: "Яндекс Музыка", logo: "ЯМ", category: "online", code: "URETSYVHAA", discount: "45 дней", type: "percent", title: "45 дней бесплатно", desc: "45 дней доступа к Яндекс Музыке бесплатно для новых пользователей или 30 дней за 1 ₽", expiry: "30.09.2026", uses: 1014, hot: true, link: "https://yamuz45.prfl.me/sites/kffylh?erid=2RanymKnMmM" },
+    { store: "ТАНУКИ", logo: "ТА", category: "food", code: "20MS1493", discount: "20%", type: "percent", title: "Скидка 20% на первый заказ", desc: "Скидка 20% от 1090 ₽ на первый заказ в Тануки", expiry: "30.07.2026", uses: 752, hot: true, link: "https://tanuki.prfl.me/sites/ifddgh?erid=2RanynjHKto" },
+    { store: "ТАНУКИ", logo: "ТА", category: "food", code: "15MS1493", discount: "15%", type: "percent", title: "Скидка 15% на повторные заказы", desc: "Скидка 15% от 1490 ₽ на все повторные заказы в Тануки", expiry: "30.07.2026", uses: 647, hot: true, link: "https://tanuki.prfl.me/sites/ifddgh?erid=2RanynjHKto" },
+    { store: "ТАНУКИ", logo: "ТА", category: "food", code: "MS1493", discount: "Ролл", type: "deal", title: "Ролл Мексиканский в подарок", desc: "Ролл Мексиканский в подарок при каждом заказе от 1490 ₽", expiry: "30.07.2026", uses: 701, hot: true, link: "https://tanuki.prfl.me/sites/ifddgh?erid=2RanynjHKto" },
+    { store: "POLZARU", logo: "PO", category: "health", code: "PRFGE592", discount: "10%", type: "percent", title: "Скидка 10% на первый заказ", desc: "Скидка 10% на первый заказ от 2000 ₽ на весь ассортимент", expiry: "31.07.2026", uses: 1203, hot: true, link: "https://polza.prfl.me/sites/yzstj3?erid=2RanykE1DEs" },
+    { store: "POLZARU", logo: "PO", category: "health", code: "PRFRCMEW", discount: "3%", type: "percent", title: "Скидка 3% на повторный заказ", desc: "Скидка 3% на каждый повторный заказ от 1900 ₽ на весь ассортимент", expiry: "31.07.2026", uses: 916, hot: true, link: "https://polza.prfl.me/sites/yzstj3?erid=2RanykE1DEs" },
+    { store: "Яндекс Афиша", logo: "ЯА", category: "online", code: "JZ943516", discount: "750 ₽", type: "deal", title: "Скидка 750 ₽ от 5000 ₽", desc: "Скидка 750 ₽ на первую покупку билетов от 5000 ₽", expiry: "30.09.2026", uses: 1248, hot: true, link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315" },
+    { store: "Яндекс Афиша", logo: "ЯА", category: "online", code: "AJ835911", discount: "300 ₽", type: "deal", title: "Скидка 300 ₽ от 2000 ₽", desc: "Скидка 300 ₽ на первую покупку билетов от 2000 ₽", expiry: "30.09.2026", uses: 978, hot: true, link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315" },
+    { store: "Яндекс Афиша", logo: "ЯА", category: "online", code: "HI826615", discount: "400 ₽", type: "deal", title: "Скидка 400 ₽ от 3000 ₽", desc: "Скидка 400 ₽ на первую покупку билетов от 3000 ₽", expiry: "30.09.2026", uses: 1012, hot: true, link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315" },
+    { store: "Яндекс Афиша", logo: "ЯА", category: "online", code: "AJ063246", discount: "10%", type: "percent", title: "Скидка 10% на билеты", desc: "Скидка 10% на первую и все повторные покупки билетов от 3000 ₽", expiry: "30.09.2026", uses: 1104, hot: true, link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315" },
+    { store: "Яндекс Афиша", logo: "ЯА", category: "online", code: "AJ795285", discount: "100%", type: "percent", title: "Сервисный сбор 0 ₽", desc: "Скидка 100% на сервисный сбор на первую и все повторные покупки билетов от 3000 ₽", expiry: "30.09.2026", uses: 1104, hot: true, link: "https://yandafisha.prfl.me/sites/1elvnx?erid=2RanymJJ315" }
+];
+
+let currentCategory = 'all';
+let searchQuery = '';
+
+function renderPromos() {
+    const grid = document.getElementById('promoGrid');
+    const empty = document.getElementById('emptyState');
+    const count = document.getElementById('resultsCount');
+    
+    let filtered = promos.filter(p => {
+        const matchCat = currentCategory === 'all' || p.category === currentCategory;
+        const matchSearch = !searchQuery || 
+            p.store.toLowerCase().includes(searchQuery) || 
+            p.title.toLowerCase().includes(searchQuery) || 
+            p.code.toLowerCase().includes(searchQuery) ||
+            p.desc.toLowerCase().includes(searchQuery);
+        return matchCat && matchSearch;
+    });
+
+    count.textContent = `${filtered.length} предложений`;
+    
+    if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    grid.innerHTML = filtered.map((p, i) => `
+        <div class="promo-card fade-in" style="animation-delay: ${i * 0.05}s">
+            <div class="card-top">
+                <div class="store-info">
+                    <div class="store-logo">${p.logo}</div>
+                    <div>
+                        <div class="store-name">${p.store}</div>
+                        <div class="store-category">${getCategoryName(p.category)}</div>
+                    </div>
+                </div>
+                <span class="discount-badge ${p.hot ? 'badge-hot' : 'badge-percent'}">
+                    ${p.hot ? '🔥 HOT' : p.discount}
+                </span>
+            </div>
+            <div class="card-title">${p.title}</div>
+            <div class="card-desc">${p.desc}</div>
+            <div class="card-meta">
+                <span>👥 ${p.uses.toLocaleString()} использований</span>
+                <span>⏰ до ${p.expiry}</span>
+            </div>
+            <div class="promo-code-box">
+                <div class="promo-code">${p.code}</div>
+                <button class="copy-btn" onclick="copyCode('${p.code}', this)">Скопировать</button>
+            </div>
+            ${p.link ? `<a href="${p.link}" rel="sponsored noopener noreferrer" target="_blank" class="cpa-link">🔗 Перейти в ${p.store} ⚠️ (реклама)</a>` : ''}
+        </div>`).join('');
+}
+
+function getCategoryName(cat) {
+    const names = {
+        fashion: '👕 Одежда',
+        tech: '💻 Техника',
+        food: '🍔 Еда',
+        beauty: '💄 Красота',
+        sport: '⚽ Спорт',
+        travel: '✈️ Путешествия',
+        games: '🎮 Игры',
+        health: '➕ Здоровье',
+        online: '📺 Онлайн сервисы',
+        pets: '🐾 Товары для животных'
+    };
+    return names[cat] || cat;
+}
+
+function copyCode(code, btn) {
+    navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Скопировано';
+        btn.classList.add('copied');
+        showToast('✅ Промокод ' + code + ' скопирован!');
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('copied');
+        }, 2000);
+    }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Скопировано';
+        showToast('✅ Промокод скопирован!');
+        setTimeout(() => { btn.textContent = originalText; }, 2000);
+    });
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function setCategory(btn, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCategory = cat;
+    renderPromos();
+}
+
+function filterPromos() {
+    searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+    renderPromos();
+}
+
+window.addEventListener('scroll', () => {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+renderPromos();
+</script>
+
+</body>
+</html>
