@@ -73,6 +73,31 @@
     </script>
     
     <style>
+.ad-label {
+    display: block;
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    font-size: 10px;
+    line-height: 1.4;
+    color: var(--text-muted);
+    opacity: 0.75;
+}
+.ad-label strong {
+    color: #ff9a5a;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.ad-label .erid {
+    display: block;
+    margin-top: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    color: #666;
+    word-break: break-all;
+}
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -226,7 +251,7 @@
 
 <script>
 const promos = [
-    { store: "Ёбидоеби", logo: "ЁБ", category: "food", code: "BL6791PF", discount: "20%", type: "percent", title: "Скидка 20%", desc: "Скидка 20% от 1800 ₽ на первый заказ", expiry: "31.07.2026", uses: 1312, hot: true, link: "https://yobidoyobi1.prfl.me/sites/1eewie?erid=2RanykgeyRV" },
+    { store: "Ёбидоеби", logo: "ЁБ", category: "food", code: "BL6791PF", discount: "20%", type: "percent", title: "Скидка 20%", desc: "Скидка 20% от 1800 ₽ на первый заказ", expiry: "31.07.2026", uses: 1312, hot: true, link: "https://yobidoyobi1.prfl.me/sites/1eewie?erid=2RanykgeyRV", erid: "2RanykgeyRV", advertiser: "ООО "Вкусные технологии"", inn: "2465359759" },
     { store: "Бетховен", logo: "БТ", category: "pets", code: "CPFBLY6X2TT", discount: "20%", type: "percent", title: "Скидка 20% на первый и повторные заказы", desc: "Скидка 20% на первый и все повторные онлайн-заказы товаров собственной торговой марки от 1500 ₽", expiry: "31.07.2026", uses: 957, hot: true, link: "https://bethowenru.prfl.me/sites/kxrc01?erid=2RanykZFNVh" },
     { store: "Бетховен", logo: "БТ", category: "pets", code: "DPFRGE2TT2I", discount: "15%", type: "percent", title: "Скидка 15% в Бетховен", desc: "Скидка 15% на первый и все повторные онлайн-заказы от 1500 ₽", expiry: "31.07.2026", uses: 1024, hot: true, link: "https://bethowenru.prfl.me/sites/kxrc01?erid=2RanykZFNVh" },
     { store: "Телодвижения на WB", logo: "ТЕ", category: "fashion", code: "13NZJ3P6", discount: "10%", type: "percent", title: "Скидка 1000 ₽", desc: "Дополнительная скидка 10% по промокоду на все товары бренда Телодвижения на WB при каждом заказе", expiry: "31.07.2026", uses: 812, hot: true, link: "https://telodvizenia.prfl.me/sites/aaekss?erid=2RanynnEdVd" },
@@ -280,32 +305,48 @@ function renderPromos() {
     }
     empty.style.display = 'none';
 
-    grid.innerHTML = filtered.map((p, i) => `
-        <div class="promo-card fade-in" style="animation-delay: ${i * 0.05}s">
-            <div class="card-top">
-                <div class="store-info">
-                    <div class="store-logo">${p.logo}</div>
-                    <div>
-                        <div class="store-name">${p.store}</div>
-                        <div class="store-category">${getCategoryName(p.category)}</div>
+    grid.innerHTML = filtered.map((p, i) => {
+        // Формируем CPA-ссылку с erid
+        const cpaLink = p.link ? `
+            <a href="${p.link}?erid=${p.erid}" 
+               rel="sponsored noopener noreferrer" 
+               target="_blank" 
+               class="cpa-link"
+               data-erid="${p.erid}">
+                🔗 Перейти в ${p.store} ⚠️ (реклама)
+            </a>
+            <div class="ad-label">
+                <strong>Реклама.</strong> ${p.advertiser || p.store} ИНН ${p.inn || '—'} erid: <span class="erid">${p.erid}</span>
+            </div>
+        ` : '';
+        
+        return `
+            <div class="promo-card fade-in" style="animation-delay: ${i * 0.05}s">
+                <div class="card-top">
+                    <div class="store-info">
+                        <div class="store-logo">${p.logo}</div>
+                        <div>
+                            <div class="store-name">${p.store}</div>
+                            <div class="store-category">${getCategoryName(p.category)}</div>
+                        </div>
                     </div>
+                    <span class="discount-badge ${p.hot ? 'badge-hot' : 'badge-percent'}">
+                        ${p.hot ? '🔥 HOT' : p.discount}
+                    </span>
                 </div>
-                <span class="discount-badge ${p.hot ? 'badge-hot' : 'badge-percent'}">
-                    ${p.hot ? '🔥 HOT' : p.discount}
-                </span>
-            </div>
-            <div class="card-title">${p.title}</div>
-            <div class="card-desc">${p.desc}</div>
-            <div class="card-meta">
-                <span>👥 ${p.uses.toLocaleString()} использований</span>
-                <span>⏰ до ${p.expiry}</span>
-            </div>
-            <div class="promo-code-box">
-                <div class="promo-code">${p.code}</div>
-                <button class="copy-btn" onclick="copyCode('${p.code}', this)">Скопировать</button>
-            </div>
-            ${p.link ? `<a href="${p.link}" rel="sponsored noopener noreferrer" target="_blank" class="cpa-link">🔗 Перейти в ${p.store} ⚠️ (реклама)</a>` : ''}
-        </div>`).join('');
+                <div class="card-title">${p.title}</div>
+                <div class="card-desc">${p.desc}</div>
+                <div class="card-meta">
+                    <span>👥 ${p.uses.toLocaleString()} использований</span>
+                    <span>⏰ до ${p.expiry}</span>
+                </div>
+                <div class="promo-code-box">
+                    <div class="promo-code">${p.code}</div>
+                    <button class="copy-btn" onclick="copyCode('${p.code}', this)">Скопировать</button>
+                </div>
+                ${cpaLink}
+            </div>`;
+    }).join('');
 }
 
 function getCategoryName(cat) {
